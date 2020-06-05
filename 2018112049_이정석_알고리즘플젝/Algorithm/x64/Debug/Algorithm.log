@@ -1,0 +1,7 @@
+﻿  main.cpp
+d:\사망년\알골\플젝\2018112049_이정석_알고리즘플젝\algorithm\main.cpp(75): warning C4267: '=': 'size_t'에서 'int'(으)로 변환하면서 데이터가 손실될 수 있습니다.
+d:\사망년\알골\플젝\2018112049_이정석_알고리즘플젝\algorithm\main.cpp(83): warning C4267: '=': 'size_t'에서 'int'(으)로 변환하면서 데이터가 손실될 수 있습니다.
+d:\사망년\알골\플젝\2018112049_이정석_알고리즘플젝\algorithm\main.cpp(138): warning C4267: 'return': 'size_t'에서 'int'(으)로 변환하면서 데이터가 손실될 수 있습니다.
+d:\사망년\알골\플젝\2018112049_이정석_알고리즘플젝\algorithm\main.cpp(281): warning C4267: '초기화 중': 'size_t'에서 'int'(으)로 변환하면서 데이터가 손실될 수 있습니다.
+d:\사망년\알골\플젝\2018112049_이정석_알고리즘플젝\algorithm\main.cpp(312): warning C4267: '초기화 중': 'size_t'에서 'int'(으)로 변환하면서 데이터가 손실될 수 있습니다.
+  Algorithm.vcxproj -> D:\사망년\알골\플젝\2018112049_이정석_알고리즘플젝\x64\Debug\Algorithm.exe
