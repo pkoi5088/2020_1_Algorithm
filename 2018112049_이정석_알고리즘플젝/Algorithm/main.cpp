@@ -195,18 +195,18 @@ public:
 	}
 
 	//unter <= t <= over를 만족하는 메뉴m이 있는가?
-	bool isIn(menu m, int under, int over, int& index) {
+	int isIn(menu m, int under, int over, int& index) {
 		int t = 0;
 		for (int i = 0; i < order.size(); i++) {
 			t += order[i].first.getTime();
 			if (m == order[i].first&&order[i].second.size() != order[i].first.getMax()) {
 				if (under <= t && t <= over) {
 					index = i;
-					return true;
+					return t;
 				}
 			}
 		}
-		return false;
+		return -1;
 	}
 
 	//tableNumber의 하한선 반환
@@ -319,19 +319,30 @@ public:
 		1. under <= t <= over를 만족하는 자리가 있는 화구번호
 		2. 만약 다 만족하지 않으면 over-under가 가장 작은 화구번호
 		*/
-		vector<pair<int, int>> r;//first : 화구번호, second : index
+		vector<pair<int,pair<int, int>>> r;//first : t, second.first : 화구번호, second.second : index
 		for (int i = 0; i < N; i++) {
 			//under <= t <= over를 만족하는 화구가 있으면
 			int in = -1;
-			if (arr[i].isIn(m, under, over, in)) {
+			int t = arr[i].isIn(m, under, over, in);
+			if (t != -1) {
 				//return에 추가
-				r.push_back({ i,in });
+				r.push_back({ t ,{ i,in } });
 			}
 		}
 		//결과가 존재한다
+		
 		if (r.size() > 0) {
-			index = r[0].second;
-			return r[0].first;
+			int a = r[0].first;
+			for (int i = 1; i < r.size(); i++) {
+				if (r[i].first < a)
+					a = r[i].first;
+			}
+			for (int i = 0; i < r.size(); i++) {
+				if (r[i].first == a) {
+					index = r[i].second.second;
+					return r[i].second.first;
+				}
+			}
 		}
 		//결과가 없다 over or under를 갱신해야 하는 상황
 		vector<pair<pair<int, int>, pair<int, int>>> sr;
@@ -657,6 +668,7 @@ int main() {
 		timeTable[2][i] = (double)(end - start);
 		start = clock();
 	}
+	kitchen kitchen3(kitchen0), kitchen4(kitchen0), kitchen5(kitchen0);
 	cout << "-------------------------------\n";
 	vector<pair<int, int>> r0 = kitchen0.execute(T);
 	//kitchen0.print();
@@ -699,9 +711,7 @@ int main() {
 	cout << "BruteForce : " << Taverage1 << "ms" << endl;
 	cout << "Greedy : " << Taverage2 << "ms" << endl;
 	cout << "-------------------------------\n";
-	cin >> T;
-	/*
-	kitchen kitchen3(kitchen1), kitchen4(kitchen1), kitchen5(kitchen1);
+	//cin >> T;
 	int time3, time4, time5;
 	{
 		int j;
@@ -732,6 +742,5 @@ int main() {
 	cout << "Fast 소요시간 및 대기시간 : " << time3 << "ms, " << r3[T].second - r3[T].first << endl;
 	cout << "BruteForce알고리즘 소요시간 및 대기시간 : " << time4 << "ms, " << r4[T].second - r4[T].first << endl;
 	cout << "Greedy알고리즘 소요시간 및 대기시간 : " << time5 << "ms, " << r5[T].second - r5[T].first << endl;
-	*/
 	return 0;
 }
