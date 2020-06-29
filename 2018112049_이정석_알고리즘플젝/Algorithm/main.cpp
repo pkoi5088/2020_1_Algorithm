@@ -676,9 +676,9 @@ int main() {
 					tt[k] += timeTable[k].at(l);
 				}
 			}
-			cout << "Fast의 평균 대기시간 | 연산 소요시간\n" << a0 / cnt << " | " << tt[0] / CLOCKS_PER_SEC << "s" << endl;
-			cout << "BruteForce알고리즘의 평균 대기시간 | 연산 소요시간\n" << a1 / cnt << " | " << tt[1] / CLOCKS_PER_SEC << "s" << endl;
-			cout << "Greedy알고리즘의 평균 대기시간 | 연산 소요시간\n" << a2 / cnt << " | " << tt[2] / CLOCKS_PER_SEC << "s" << endl;
+			cout << "Fast의 평균 대기시간 | 연산 소요시간\n" << a0 / cnt << " | " << (tt[0] / CLOCKS_PER_SEC) / cnt << "s" << endl;
+			cout << "BruteForce알고리즘의 평균 대기시간 | 연산 소요시간\n" << a1 / cnt << " | " << (tt[1] / CLOCKS_PER_SEC) / cnt << "s" << endl;
+			cout << "Greedy알고리즘의 평균 대기시간 | 연산 소요시간\n" << a2 / cnt << " | " << (tt[2] / CLOCKS_PER_SEC) / cnt << "s" << endl;
 			return 0;
 		}
 		for (int i = 0; i < in.size(); i++) {
