@@ -3,6 +3,8 @@
 #include <algorithm>
 #include <utility>
 #include <ctime>
+#include <Windows.h>
+#include <string>
 
 using namespace std;
 
@@ -238,13 +240,15 @@ public:
 	}
 
 	void print() {
+		cout << "| ";
 		for (int i = 0; i < order.size(); i++) {
-			cout << "{" << order[i].first.number << ", ";
+			cout << order[i].first.number << ", { ";
 			for (int j = 0; j < order[i].second.size(); j++) {
 				cout << order[i].second.at(j) << ' ';
 			}
-			cout << "}\n";
+			cout << "} | ";
 		}
+		cout << endl;
 	}
 };
 
@@ -607,16 +611,14 @@ public:
 
 	void print() {
 		for (int i = 0; i < N; i++) {
-			cout << i << endl;
 			arr[i].print();
-			cout << endl;
 		}
 	}
 };
 
 int main() {
-	int N, M, T;
-	double **timeTable;
+	int N, M, cnt = 0;
+	vector<double> timeTable[3];
 	clock_t start, end;
 	cout << "화구의 개수 : ";
 	cin >> N;
@@ -634,113 +636,66 @@ int main() {
 		board[i].setTime(j);
 		board[i].setNum(i);
 	}
-
-	cout << "insert 회수 : ";
-	cin >> T;
-	timeTable = new double*[3];
-	for (int i = 0; i < 3; i++) {
-		timeTable[i] = new double[T];
-	}
-	for (int i = 0; i < T; i++) {
-		int j;
-		cout << i << "번째 insert의 메뉴개수 : ";
-		cin >> j;
-		vector<menu> order;
-		while (j--) {
-			int number;
-			cin >> number;
-			order.push_back(board[number]);
-		}
-		start = clock();
-		kitchen0.insertFast(order, i);
-		//kitchen0.print();
-		end = clock();
-		timeTable[0][i] = (double)(end - start);
-		start = clock();
-		kitchen1.insertBrute(order, i);
+	cin.ignore();
+	//출력부분
+	for (;;) {
+		system("cls");
+		cout << "Fast" << endl;
+		kitchen0.print();
+		cout << "BruteForce알고리즘" << endl;
 		kitchen1.print();
-		end = clock();
-		timeTable[1][i] = (double)(end - start);
-		start = clock();
-		kitchen2.insertGreedy(order, i);
+		cout << "Greedy알고리즘" << endl;
 		kitchen2.print();
-		end = clock();
-		timeTable[2][i] = (double)(end - start);
-		start = clock();
-	}
-	kitchen kitchen3(kitchen0), kitchen4(kitchen0), kitchen5(kitchen0);
-	cout << "-------------------------------\n";
-	vector<pair<int, int>> r0 = kitchen0.execute(T);
-	//kitchen0.print();
-	double average0 = 0.0;
-	cout << "[Fast]\n";
-	for (int i = 0; i < r0.size(); i++) {
-		cout << i << "번째 insert 대기시간 : " << r0[i].second - r0[i].first << endl;
-		average0 += r0[i].second - r0[i].first;
-	}
-	cout << "평균 대기시간 : " << average0 / T << endl;
-	cout << "-------------------------------\n";
-	vector<pair<int, int>> r1 = kitchen1.execute(T);
-	//kitchen1.print();
-	double average1 = 0.0;
-	cout << "[BruteForce]\n";
-	for (int i = 0; i < r1.size(); i++) {
-		cout << i << "번째 insert 대기시간 : " << r1[i].second - r1[i].first << endl;
-		average1 += r1[i].second - r1[i].first;
-	}
-	cout << "평균 대기시간 : " << average1 / T << endl;
-	cout << "-------------------------------\n";
-	vector<pair<int, int>> r2 = kitchen2.execute(T);
-	//kitchen2.print();
-	double average2 = 0.0;
-	cout << "[Greedy]\n";
-	for (int i = 0; i < r2.size(); i++) {
-		cout << i << "번째 insert 대기시간 : " << r2[i].second - r2[i].first << endl;
-		average2 += r2[i].second - r2[i].first;
-	}
-	cout << "평균 대기시간 : " << average2 / T << endl;
-	cout << "-------------------------------\n[평균실행시간]\n";
-	double Taverage0 = 0.0, Taverage1 = 0.0, Taverage2 = 0.0;
-	for (int j = 0; j < T; j++) {
-		Taverage0 += timeTable[0][j];
-		Taverage1 += timeTable[1][j];
-		Taverage2 += timeTable[2][j];
-	}
-	Taverage0 /= T, Taverage1 /= T, Taverage2 /= T;
-	cout << "Fast : " << Taverage0 << "ms" << endl;
-	cout << "BruteForce : " << Taverage1 << "ms" << endl;
-	cout << "Greedy : " << Taverage2 << "ms" << endl;
-	cout << "-------------------------------\n";
-	//cin >> T;
-	int time3, time4, time5;
-	{
-		int j;
-		cout << "마지막 insert의 메뉴개수 : ";
-		cin >> j;
+		cout << "insert : ";
+		string in;
 		vector<menu> order;
-		while (j--) {
-			int number;
-			cin >> number;
+		getline(cin, in);
+		if (in.size() == 0) {
+			cout << "프로그램을 종료합니다.\n" << endl;
+			double a0 = 0.0, a1 = 0.0, a2 = 0.0;
+			double tt[3] = { 0.0 };
+
+			vector<pair<int, int>> r0 = kitchen0.execute(cnt);
+			vector<pair<int, int>> r1 = kitchen1.execute(cnt);
+			vector<pair<int, int>> r2 = kitchen2.execute(cnt);
+
+			for (int l = 0; l < r0.size(); l++) {
+				a0 += r0[l].second - r0[l].first;
+				a1 += r1[l].second - r1[l].first;
+				a2 += r2[l].second - r2[l].first;
+			}
+
+			for (int k = 0; k < 3; k++) {
+				for (int l = 0; l < timeTable[k].size(); l++) {
+					tt[k] += timeTable[k].at(l);
+				}
+			}
+			cout << "Fast의 평균 대기시간 | 연산 소요시간\n" << a0 / cnt << " | " << tt[0] << "ms" << endl;
+			cout << "BruteForce알고리즘의 평균 대기시간 | 연산 소요시간\n" << a1 / cnt << " | " << tt[1] << "ms" << endl;
+			cout << "Greedy알고리즘의 평균 대기시간 | 연산 소요시간\n" << a2 / cnt << " | " << tt[2] << "ms" << endl;
+			return 0;
+		}
+		for (int i = 0; i < in.size(); i++) {
+			int number = 0;
+			for (; in[i] != ' ' && i < in.size(); i++) {
+				number = number * 10 + (in[i] - '0');
+			}
 			order.push_back(board[number]);
 		}
 		start = clock();
-		kitchen3.insertFast(order, T);
+		kitchen0.insertFast(order, cnt);
 		end = clock();
-		time3 = end - start;
+		timeTable[0].push_back((double)(end - start));
 		start = clock();
-		kitchen4.insertBrute(order, T);
+		kitchen1.insertBrute(order, cnt);
 		end = clock();
-		time4 = end - start;
+		timeTable[1].push_back((double)(end - start));
 		start = clock();
-		kitchen5.insertGreedy(order, T);
+		kitchen2.insertGreedy(order, cnt);
 		end = clock();
-		time5 = end - start;
+		timeTable[2].push_back((double)(end - start));
+		start = clock();
+		cnt++;
 	}
-	vector<pair<int, int>> r3 = kitchen3.execute(T + 1);
-	vector<pair<int, int>> r4 = kitchen4.execute(T + 1);
-	vector<pair<int, int>> r5 = kitchen5.execute(T + 1);
-	cout << "Fast 소요시간 및 대기시간 : " << time3 << "ms, " << r3[T].second - r3[T].first << endl;
-	cout << "BruteForce알고리즘 소요시간 및 대기시간 : " << time4 << "ms, " << r4[T].second - r4[T].first << endl;
-	cout << "Greedy알고리즘 소요시간 및 대기시간 : " << time5 << "ms, " << r5[T].second - r5[T].first << endl;
 	return 0;
 }

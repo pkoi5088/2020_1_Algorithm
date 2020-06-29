@@ -1,2 +1,2 @@
-#TargetFrameworkVersion=v4.0:PlatformToolSet=v141:EnableManagedIncrementalBuild=false:VCToolArchitecture=Native32Bit:WindowsTargetPlatformVersion=10.0.17763.0
-Debug|x64|D:\사망년\알골\플젝\2018112049_이정석_알고리즘플젝\|
+PlatformToolSet=v142:VCToolArchitecture=Native32Bit:VCToolsVersion=14.26.28801:TargetPlatformVersion=10.0.18362.0:
+Debug|x64|D:\GitHubRepository\2020_1_Algorithm\2018112049_이정석_알고리즘플젝\|
