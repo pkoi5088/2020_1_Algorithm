@@ -21,6 +21,7 @@ private:
 
 public:
 	//음식 식별 번호
+	string name;
 	int number = 0;
 	menu() {}
 
@@ -29,6 +30,7 @@ public:
 	void setTime(int N) { time = N; }
 	int getTime() { return time; }
 	void setNum(int N) { number = N; }
+	void setName(string N) { name = N; }
 
 	bool operator> (const menu& m) {
 		return this->time < m.time;
@@ -242,7 +244,7 @@ public:
 	void print() {
 		cout << "| ";
 		for (int i = 0; i < order.size(); i++) {
-			cout << order[i].first.number << ", { ";
+			cout << order[i].first.name << ", { ";
 			for (int j = 0; j < order[i].second.size(); j++) {
 				cout << order[i].second.at(j) << ' ';
 			}
@@ -611,8 +613,10 @@ public:
 
 	void print() {
 		for (int i = 0; i < N; i++) {
+			cout << i << "번 화구";
 			arr[i].print();
 		}
+		cout << endl;
 	}
 };
 
@@ -629,7 +633,9 @@ int main() {
 	kitchen kitchen0(N), kitchen1(N), kitchen2(N);
 	for (int i = 0; i < M; i++) {
 		int j;
-		cout << "메뉴 " << i << "의 최대조리 개수와 시간 : ";
+		string name;
+		cout  << i << "번째 메뉴의 이름, 최대조리 개수와 시간 : ";
+		cin >> board[i].name;
 		cin >> j;
 		board[i].setMax(j);
 		cin >> j;
@@ -670,9 +676,9 @@ int main() {
 					tt[k] += timeTable[k].at(l);
 				}
 			}
-			cout << "Fast의 평균 대기시간 | 연산 소요시간\n" << a0 / cnt << " | " << tt[0] << "ms" << endl;
-			cout << "BruteForce알고리즘의 평균 대기시간 | 연산 소요시간\n" << a1 / cnt << " | " << tt[1] << "ms" << endl;
-			cout << "Greedy알고리즘의 평균 대기시간 | 연산 소요시간\n" << a2 / cnt << " | " << tt[2] << "ms" << endl;
+			cout << "Fast의 평균 대기시간 | 연산 소요시간\n" << a0 / cnt << " | " << tt[0] / CLOCKS_PER_SEC << "s" << endl;
+			cout << "BruteForce알고리즘의 평균 대기시간 | 연산 소요시간\n" << a1 / cnt << " | " << tt[1] / CLOCKS_PER_SEC << "s" << endl;
+			cout << "Greedy알고리즘의 평균 대기시간 | 연산 소요시간\n" << a2 / cnt << " | " << tt[2] / CLOCKS_PER_SEC << "s" << endl;
 			return 0;
 		}
 		for (int i = 0; i < in.size(); i++) {
